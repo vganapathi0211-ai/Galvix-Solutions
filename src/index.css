@@ -1,0 +1,66 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    color-scheme: dark;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-background text-gray-200 font-sans antialiased;
+    background-image:
+      radial-gradient(circle at top left, rgba(59,130,246,0.13), transparent 28%),
+      radial-gradient(circle at bottom right, rgba(14,165,233,0.10), transparent 32%),
+      linear-gradient(180deg, #020817 0%, #020617 100%);
+  }
+
+  * {
+    @apply border-white/10;
+  }
+
+  ::selection {
+    background: rgba(59, 130, 246, 0.35);
+    color: white;
+  }
+}
+
+@layer utilities {
+  .glass {
+    @apply bg-slate-950/70 backdrop-blur-xl border border-white/10;
+  }
+
+  .glass-card {
+    @apply bg-slate-950/60 backdrop-blur-sm border border-white/10 rounded-3xl shadow-[0_24px_80px_rgba(15,23,42,0.45)];
+  }
+
+  .text-gradient {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-blue-300 via-cyan-300 to-sky-500;
+  }
+
+  .bg-grid {
+    background-image:
+      linear-gradient(rgba(148,163,184,0.08) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(148,163,184,0.08) 1px, transparent 1px);
+    background-size: 32px 32px;
+    mask-image: radial-gradient(circle at center, black 45%, transparent 100%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

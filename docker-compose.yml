@@ -1,0 +1,36 @@
+version: '3.9'
+
+services:
+  frontend:
+    image: node:20-alpine
+    working_dir: /app
+    volumes:
+      - .:/app
+    command: sh -c "npm install && npm run dev -- --host 0.0.0.0 --port 3000"
+    ports:
+      - "3000:3000"
+    environment:
+      - VITE_API_BASE_URL=
+      - VITE_API_PROXY_TARGET=http://java-backend:8080
+
+  java-backend:
+    image: eclipse-temurin:17-jdk
+    working_dir: /workspace
+    volumes:
+      - ./backend-java:/workspace
+    command: sh -c "./mvnw spring-boot:run"
+    ports:
+      - "8080:8080"
+    environment:
+      - SERVER_PORT=8080
+      - EXCEL_FILE_PATH=./data/GL_Solutions_Leads.xlsx
+      - AI_BASE_URL=http://python-ai:8000
+
+  python-ai:
+    image: python:3.12-slim
+    working_dir: /app
+    volumes:
+      - ./ai-python:/app
+    command: sh -c "pip install -r requirements.txt && uvicorn app.main:app --host 0.0.0.0 --port 8000"
+    ports:
+      - "8000:8000"

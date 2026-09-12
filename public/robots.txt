@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://gp-startup-website.vercel.app/sitemap.xml
