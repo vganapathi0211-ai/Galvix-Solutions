@@ -115,20 +115,43 @@ public class ContactController {
 
     @PostMapping("/chat")
     public ResponseEntity<?> chat(@RequestBody Map<String, Object> request) {
-        String message = String.valueOf(request.getOrDefault("message", "")).trim();
-        if (message.isBlank()) {
+        Object messagePayload = request.getOrDefault("messages", request.getOrDefault("message", ""));
+        Object normalizedPayload;
+
+        if (messagePayload instanceof java.util.List<?> messages) {
+            normalizedPayload = messages.stream()
+                .filter(Map.class::isInstance)
+                .map(Map.class::cast)
+                .map(item -> {
+                    Object role = item.getOrDefault("role", "user");
+                    Object content = item.getOrDefault("content", "");
+                    return Map.of(
+                        "role", String.valueOf(role),
+                        "content", String.valueOf(content).trim()
+                    );
+                })
+                .filter(item -> !String.valueOf(item.get("content")).isBlank())
+                .toList();
+        } else {
+            String message = String.valueOf(messagePayload).trim();
+            if (message.isBlank()) {
+                return ResponseEntity.badRequest().body(Map.of(
+                    "success", false,
+                    "message", "Please enter a message before sending."
+                ));
+            }
+            normalizedPayload = message;
+        }
+
+        if (normalizedPayload instanceof java.util.List<?> messageList && messageList.isEmpty()) {
             return ResponseEntity.badRequest().body(Map.of(
                 "success", false,
                 "message", "Please enter a message before sending."
             ));
         }
 
-        if (message.length() > 1500) {
-            message = message.substring(0, 1500);
-        }
-
         try {
-            Map<String, Object> aiResult = pythonAIService.generateChatReply(message);
+            Map<String, Object> aiResult = pythonAIService.generateChatReply(normalizedPayload);
             if (Boolean.TRUE.equals(aiResult.get("success")) || "SUCCESS".equalsIgnoreCase(String.valueOf(aiResult.get("status")))) {
                 return ResponseEntity.ok(Map.of(
                     "success", true,

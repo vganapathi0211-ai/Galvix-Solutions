@@ -20,9 +20,11 @@ const Chatbot = () => {
       text: welcomeMessage,
       sender: 'bot',
       timestamp: new Date(),
+      isWelcome: true,
     },
   ]);
   const messagesEndRef = useRef(null);
+  const abortControllerRef = useRef(null);
 
   useEffect(() => {
     const handleOpenChatbot = () => setIsOpen(true);
@@ -34,6 +36,15 @@ const Chatbot = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages, isSending]);
 
+  const buildConversationMessages = (conversation) =>
+    conversation
+      .filter((message) => !message.isWelcome)
+      .map((message) => ({
+        role: message.sender === 'user' ? 'user' : 'assistant',
+        content: String(message.text || '').trim(),
+      }))
+      .filter((message) => message.content.length > 0);
+
   const sendMessage = async (messageText) => {
     const trimmed = (messageText || input).trim();
     if (!trimmed || isSending) return;
@@ -44,9 +55,16 @@ const Chatbot = () => {
       timestamp: new Date(),
     };
 
+    const conversationHistory = buildConversationMessages(messages);
+    const payloadMessages = [...conversationHistory, { role: 'user', content: trimmed }];
+
     setMessages((prev) => [...prev, userMessage]);
     setInput('');
     setIsSending(true);
+
+    abortControllerRef.current?.abort();
+    const controller = new AbortController();
+    abortControllerRef.current = controller;
 
     try {
       const response = await fetch('/api/chat', {
@@ -55,7 +73,8 @@ const Chatbot = () => {
           'Content-Type': 'application/json',
           Accept: 'application/json',
         },
-        body: JSON.stringify({ message: trimmed }),
+        body: JSON.stringify({ messages: payloadMessages }),
+        signal: controller.signal,
       });
 
       const data = await response.json().catch(() => ({}));
@@ -72,6 +91,10 @@ const Chatbot = () => {
 
       setMessages((prev) => [...prev, botReply]);
     } catch (error) {
+      if (error.name === 'AbortError') {
+        return;
+      }
+
       setMessages((prev) => [
         ...prev,
         {
@@ -82,6 +105,9 @@ const Chatbot = () => {
         },
       ]);
     } finally {
+      if (abortControllerRef.current?.signal === controller.signal) {
+        abortControllerRef.current = null;
+      }
       setIsSending(false);
     }
   };

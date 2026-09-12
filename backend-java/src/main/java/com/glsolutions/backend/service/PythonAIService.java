@@ -64,12 +64,23 @@ public class PythonAIService {
         );
     }
 
-    public Map<String, Object> generateChatReply(String message) {
+    public Map<String, Object> generateChatReply(Object payload) {
         try {
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_JSON);
-            Map<String, String> payload = Map.of("message", message);
-            HttpEntity<Map<String, String>> request = new HttpEntity<>(payload, headers);
+
+            Map<String, Object> outgoingPayload = new java.util.HashMap<>();
+            if (payload instanceof java.util.List<?> messages) {
+                outgoingPayload.put("messages", messages);
+            } else if (payload instanceof String message) {
+                outgoingPayload.put("message", message);
+            } else if (payload instanceof Map<?, ?> map) {
+                for (Map.Entry<?, ?> entry : map.entrySet()) {
+                    outgoingPayload.put(String.valueOf(entry.getKey()), entry.getValue());
+                }
+            }
+
+            HttpEntity<Map<String, Object>> request = new HttpEntity<>(outgoingPayload, headers);
 
             ResponseEntity<Map> response = restTemplate.postForEntity(
                 aiBaseUrl + "/chat",

@@ -14,6 +14,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+import java.util.List;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -98,5 +99,29 @@ class ContactControllerTest {
         assertEquals(true, body.get("success"));
         assertEquals("success", body.get("status"));
         assertTrue(body.get("reply").toString().contains("Absolutely"));
+    }
+
+    @Test
+    void chat_acceptsConversationHistoryPayload() {
+        when(pythonAIService.generateChatReply(List.of(
+            Map.of("role", "user", "content", "What services do you offer?"),
+            Map.of("role", "assistant", "content", "We help with websites and AI."),
+            Map.of("role", "user", "content", "Do you build mobile apps?")
+        ))).thenReturn(Map.of(
+            "success", true,
+            "reply", "Yes, we also build mobile experiences and product experiences.",
+            "status", "SUCCESS"
+        ));
+
+        ResponseEntity<?> response = controller.chat(Map.of("messages", List.of(
+            Map.of("role", "user", "content", "What services do you offer?"),
+            Map.of("role", "assistant", "content", "We help with websites and AI."),
+            Map.of("role", "user", "content", "Do you build mobile apps?")
+        )));
+
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        Map<String, Object> body = (Map<String, Object>) response.getBody();
+        assertEquals(true, body.get("success"));
+        assertTrue(body.get("reply").toString().contains("mobile"));
     }
 }
