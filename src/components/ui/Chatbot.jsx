@@ -49,16 +49,16 @@ const Chatbot = () => {
     const trimmed = (messageText || input).trim();
     if (!trimmed || isSending) return;
 
-    const userMessage = {
+    const nextUserMessage = {
       text: trimmed,
       sender: 'user',
       timestamp: new Date(),
     };
 
-    const conversationHistory = buildConversationMessages(messages);
-    const payloadMessages = [...conversationHistory, { role: 'user', content: trimmed }];
+    const safeMessages = buildConversationMessages(messages);
+    const payloadMessages = [...safeMessages, { role: 'user', content: trimmed }];
 
-    setMessages((prev) => [...prev, userMessage]);
+    setMessages((prev) => [...prev, nextUserMessage]);
     setInput('');
     setIsSending(true);
 
@@ -102,6 +102,7 @@ const Chatbot = () => {
           sender: 'bot',
           timestamp: new Date(),
           error: true,
+          originalMessage: trimmed,
         },
       ]);
     } finally {
@@ -192,7 +193,7 @@ const Chatbot = () => {
                     {msg.error && (
                       <button
                         type="button"
-                        onClick={() => sendMessage(msg.text)}
+                        onClick={() => sendMessage(msg.originalMessage)}
                         className="mt-3 inline-flex items-center gap-1 rounded-full border border-red-400/30 bg-red-500/10 px-2 py-1 text-[10px] font-medium uppercase tracking-[0.18em] text-red-100"
                       >
                         Retry <ArrowUpRight size={12} />
