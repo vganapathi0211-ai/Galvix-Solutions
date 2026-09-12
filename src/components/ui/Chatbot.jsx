@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { MessageCircle, X, Send, Sparkles, Bot, ArrowUpRight } from 'lucide-react';
+import { generateAssistantReply } from '../../utils/chatAssistant';
 
 const suggestions = [
   'What services do you offer?',
@@ -67,24 +68,38 @@ const Chatbot = () => {
     abortControllerRef.current = controller;
 
     try {
-      const response = await fetch('/api/chat', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Accept: 'application/json',
-        },
-        body: JSON.stringify({ messages: payloadMessages }),
-        signal: controller.signal,
-      });
+      let replyText = '';
 
-      const data = await response.json().catch(() => ({}));
+      try {
+        const response = await fetch('/api/chat', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Accept: 'application/json',
+          },
+          body: JSON.stringify({ messages: payloadMessages }),
+          signal: controller.signal,
+        });
 
-      if (!response.ok || data.success === false) {
-        throw new Error(data.message || 'Sorry, I could not process that right now.');
+        if (response.ok) {
+          const data = await response.json().catch(() => null);
+          if (data && data.reply) {
+            replyText = data.reply;
+          }
+        }
+      } catch (fetchError) {
+        if (fetchError.name === 'AbortError') return;
+        console.warn('Network chat API call skipped or failed, using assistant fallback:', fetchError);
+      }
+
+      // If network response was unavailable or empty, use built-in intelligent assistant
+      if (!replyText) {
+        const fallback = generateAssistantReply(payloadMessages);
+        replyText = fallback.reply;
       }
 
       const botReply = {
-        text: data.reply || 'Thanks for your message. Tell us what you are trying to build and we can help identify the right direction.',
+        text: replyText,
         sender: 'bot',
         timestamp: new Date(),
       };
@@ -95,14 +110,15 @@ const Chatbot = () => {
         return;
       }
 
+      console.error('Chat error:', error);
+      const fallback = generateAssistantReply(payloadMessages);
+
       setMessages((prev) => [
         ...prev,
         {
-          text: "Sorry, I couldn't process that right now. Please try again or contact our team directly.",
+          text: fallback.reply,
           sender: 'bot',
           timestamp: new Date(),
-          error: true,
-          originalMessage: trimmed,
         },
       ]);
     } finally {

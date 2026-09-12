@@ -22,7 +22,7 @@ public class SecurityConfig {
             .csrf(AbstractHttpConfigurer::disable)
             .cors(Customizer.withDefaults())
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/api/contact", "/api/health", "/error").permitAll()
+                .requestMatchers("/api/contact", "/api/chat", "/api/health", "/error").permitAll()
                 .requestMatchers("/api/leads/**", "/api/leads/export").hasRole("USER")
                 .anyRequest().permitAll()
             )
@@ -38,7 +38,9 @@ public class SecurityConfig {
             "http://localhost:3000",
             "http://127.0.0.1:3000",
             "http://localhost:5173",
-            "http://127.0.0.1:5173"
+            "http://127.0.0.1:5173",
+            "https://gl-solutions.vercel.app",
+            "https://www.gl-solutions.vercel.app"
         ));
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(List.of("*"));
