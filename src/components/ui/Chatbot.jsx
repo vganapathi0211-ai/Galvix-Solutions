@@ -201,11 +201,74 @@ const Chatbot = () => {
                   <div
                     className={`max-w-[85%] rounded-2xl px-3.5 py-2.5 text-sm leading-relaxed shadow-sm ${
                       msg.sender === 'user'
-                        ? 'bg-gradient-to-r from-blue-600 to-blue-500 text-white'
-                        : 'border border-white/10 bg-white/6 text-slate-100'
+                        ? 'bg-gradient-to-r from-blue-600 to-blue-500 text-white whitespace-pre-wrap'
+                        : 'border border-white/10 bg-white/6 text-slate-100 whitespace-pre-line'
                     } ${msg.error ? 'border border-red-500/30 bg-red-500/10 text-red-100' : ''}`}
                   >
-                    <p>{msg.text}</p>
+                    <div className="space-y-2">
+                      {msg.text.split('\n\n').map((paragraph, pIdx) => {
+                        const lines = paragraph.split('\n');
+                        const isBulletSection = lines.some((l) => l.trim().startsWith('•') || l.trim().startsWith('-'));
+
+                        if (isBulletSection) {
+                          return (
+                            <ul key={pIdx} className="space-y-1.5 my-1">
+                              {lines.map((line, lIdx) => {
+                                const trimmed = line.trim();
+                                if (trimmed.startsWith('•') || trimmed.startsWith('-')) {
+                                  const content = trimmed.replace(/^[•\-]\s*/, '');
+                                  // Parse **bold** and [text](link)
+                                  const parts = content.split(/(\*\*.*?\*\*|\[.*?\]\(.*?\))/g);
+                                  return (
+                                    <li key={lIdx} className="flex items-start gap-2">
+                                      <span className="text-blue-400 mt-1">•</span>
+                                      <span>
+                                        {parts.map((part, partIdx) => {
+                                          if (part.startsWith('**') && part.endsWith('**')) {
+                                            return <strong key={partIdx} className="font-semibold text-white">{part.slice(2, -2)}</strong>;
+                                          }
+                                          const linkMatch = part.match(/^\[(.*?)\]\((.*?)\)$/);
+                                          if (linkMatch) {
+                                            return (
+                                              <a key={partIdx} href={linkMatch[2]} target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:underline">
+                                                {linkMatch[1]}
+                                              </a>
+                                            );
+                                          }
+                                          return part;
+                                        })}
+                                      </span>
+                                    </li>
+                                  );
+                                }
+                                return <p key={lIdx}>{line}</p>;
+                              })}
+                            </ul>
+                          );
+                        }
+
+                        // Regular paragraph with bold & link parsing
+                        const parts = paragraph.split(/(\*\*.*?\*\*|\[.*?\]\(.*?\))/g);
+                        return (
+                          <p key={pIdx}>
+                            {parts.map((part, partIdx) => {
+                              if (part.startsWith('**') && part.endsWith('**')) {
+                                return <strong key={partIdx} className="font-semibold text-white">{part.slice(2, -2)}</strong>;
+                              }
+                              const linkMatch = part.match(/^\[(.*?)\]\((.*?)\)$/);
+                              if (linkMatch) {
+                                return (
+                                  <a key={partIdx} href={linkMatch[2]} target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:underline">
+                                    {linkMatch[1]}
+                                  </a>
+                                );
+                              }
+                              return part;
+                            })}
+                          </p>
+                        );
+                      })}
+                    </div>
                     {msg.error && (
                       <button
                         type="button"
