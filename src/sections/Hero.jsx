@@ -56,7 +56,7 @@ const Hero = () => {
                   transition={{ duration: 0.7, delay: 0.15 }}
                   className="block"
                 >
-                  GL
+                  GALVIX
                 </motion.span>
               </span>
               <span className="text-gradient block overflow-hidden">
