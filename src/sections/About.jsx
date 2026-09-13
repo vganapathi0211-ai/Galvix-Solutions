@@ -49,8 +49,8 @@ const About = () => {
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(59,130,246,0.15),transparent_42%)]" />
       <div className="container mx-auto px-4 md:px-6 relative z-10">
         <SectionHeading
-          title="About GL Solutions"
-          subtitle="GL Solutions is a technology partner for teams that need practical digital systems, well-designed experiences, and cleaner ways to operate."
+          title="About GALVIX Solutions"
+          subtitle="GALVIX Solutions is a technology partner for teams that need practical digital systems, well-designed experiences, and cleaner ways to operate."
           index={1}
         />
 

@@ -3,7 +3,7 @@ from typing import List, Optional
 from fastapi import FastAPI
 from pydantic import BaseModel
 
-app = FastAPI(title="GL Solutions AI Service")
+app = FastAPI(title="GALVIX Solutions AI Service")
 
 
 class LeadRequest(BaseModel):
@@ -59,11 +59,11 @@ def chat(payload: ChatRequest):
     elif any(keyword in lowered for keyword in ["mobile", "ios", "android", "app"]):
         reply = "Yes — we can help with mobile app strategy, product planning, and digital experiences that fit your business goals. We focus on building useful, scalable experiences rather than just a feature checklist."
     elif any(keyword in lowered for keyword in ["ai", "automation", "workflow", "intelligent"]):
-        reply = "GL SOLUTIONS supports AI and automation projects, including business process automation, AI-assisted experiences, and intelligent operational workflows. We can help define the right technical direction for your use case."
+        reply = "GALVIX SOLUTIONS supports AI and automation projects, including business process automation, AI-assisted experiences, and intelligent operational workflows. We can help define the right technical direction for your use case."
     elif any(keyword in lowered for keyword in ["software", "platform"]):
         reply = "We build custom software and digital products, including web applications, mobile experiences, and tailored platform solutions designed around business needs."
     elif any(keyword in lowered for keyword in ["contact", "start project", "project", "hire", "quote", "hello", "how can i contact"]):
-        reply = "Absolutely. The best next step is to share a little about your project and goals through the GL SOLUTIONS contact form or WhatsApp. We can then recommend the most suitable approach and next steps."
+        reply = "Absolutely. The best next step is to share a little about your project and goals through the GALVIX SOLUTIONS contact form or WhatsApp. We can then recommend the most suitable approach and next steps."
     elif any(keyword in lowered for keyword in ["services", "offerings", "what do you do"]):
         reply = "Our services include web development, custom software, AI solutions, automation, digital transformation, and strategic technology consulting. We help businesses turn complex ideas into practical digital systems."
     elif any(keyword in lowered for keyword in ["technology", "tech", "stack", "tools"]):
@@ -71,7 +71,7 @@ def chat(payload: ChatRequest):
     elif any(keyword in lowered for keyword in ["thank you", "thanks"]):
         reply = "You’re welcome. We’re happy to help and would love to explore your next digital opportunity."
     else:
-        reply = f"I can help you explore GL SOLUTIONS services, technology direction, and project approach. Based on your conversation, I’d recommend we look at the right solution for your goals: {context_lower[:140] if context_lower else 'your next digital initiative'}."
+        reply = f"I can help you explore GALVIX SOLUTIONS services, technology direction, and project approach. Based on your conversation, I’d recommend we look at the right solution for your goals: {context_lower[:140] if context_lower else 'your next digital initiative'}."
 
     return {"status": "SUCCESS", "success": True, "reply": reply}
 

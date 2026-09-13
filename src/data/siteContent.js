@@ -120,7 +120,7 @@ export const industries = [
 
 export const faqs = [
   {
-    question: 'What kinds of projects does GL Solutions support?',
+    question: 'What kinds of projects does GALVIX Solutions support?',
     answer: 'We support product strategy, custom software builds, AI workflow automation, web experiences, and digital transformation initiatives for growing businesses.',
   },
   {

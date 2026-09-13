@@ -106,7 +106,7 @@ const Contact = () => {
                   </div>
                   <div>
                     <p className="text-sm text-gray-500">Email</p>
-                    <a href="mailto:hello@glsolutions.com" className="font-medium hover:text-white transition-colors">hello@glsolutions.com</a>
+                    <a href="mailto:galvixsolutions@gmail.com" className="font-medium hover:text-white transition-colors">galvixsolutions@gmail.com</a>
                   </div>
                 </div>
 

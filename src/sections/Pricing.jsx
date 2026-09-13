@@ -54,7 +54,7 @@ const plans = [
 const Pricing = () => {
   const handleChoosePlan = (planName) => {
     const phoneNumber = "918489968612";
-    const text = encodeURIComponent(`Hi GL Solutions! I am very interested in your ${planName}. Can we discuss the details to get started?`);
+    const text = encodeURIComponent(`Hi GALVIX Solutions! I am very interested in your ${planName}. Can we discuss the details to get started?`);
     window.open(`https://wa.me/${phoneNumber}?text=${text}`, '_blank');
   };
 

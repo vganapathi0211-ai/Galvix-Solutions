@@ -163,13 +163,13 @@ const Hero = () => {
                   <div className="w-3 h-3 rounded-full bg-red-500" />
                   <div className="w-3 h-3 rounded-full bg-yellow-500" />
                   <div className="w-3 h-3 rounded-full bg-green-500" />
-                  <div className="ml-4 h-4 w-32 bg-white/5 rounded text-[10px] text-gray-500 flex items-center px-2">GL Solutions</div>
+                  <div className="ml-4 h-4 w-32 bg-white/5 rounded text-[10px] text-gray-500 flex items-center px-2">GALVIX Solutions</div>
                 </div>
                 <div className="p-4 flex-grow flex flex-col gap-3 bg-black/20 overflow-hidden">
                   <div className="flex justify-between items-center mb-1">
                     <div className="flex items-center gap-2">
                       <div className="w-6 h-6 rounded bg-gradient-to-tr from-blue-600 to-cyan-500 flex items-center justify-center">
-                        <span className="text-[10px] font-bold text-white">GL</span>
+                        <span className="text-[10px] font-bold text-white">GS</span>
                       </div>
                       <div>
                         <div className="text-[11px] font-semibold text-white">Growth Systems</div>

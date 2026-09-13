@@ -88,7 +88,7 @@ public class WhatsAppService {
     private String buildMessage(Map<String, Object> leadData) {
         StringBuilder sb = new StringBuilder();
         sb.append("--------------------------------\n");
-        sb.append("GL SOLUTIONS — NEW CLIENT ENQUIRY\n");
+        sb.append("GALVIX SOLUTIONS — NEW CLIENT ENQUIRY\n");
         sb.append("--------------------------------\n\n");
         sb.append("Lead ID:\n").append(leadData.getOrDefault("leadId", "N/A")).append("\n\n");
         sb.append("Date:\n").append(leadData.getOrDefault("date", "N/A")).append("\n");
@@ -103,7 +103,7 @@ public class WhatsAppService {
         sb.append("AI Summary:\n").append(leadData.getOrDefault("aiSummary", "Not available")).append("\n");
         sb.append("Lead Priority:\n").append(leadData.getOrDefault("leadPriority", "MEDIUM")).append("\n\n");
         sb.append("--------------------------------\n");
-        sb.append("GL SOLUTIONS\n");
+        sb.append("GALVIX SOLUTIONS\n");
         sb.append("--------------------------------");
         return sb.toString();
     }

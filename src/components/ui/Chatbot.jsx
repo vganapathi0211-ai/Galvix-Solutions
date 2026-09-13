@@ -10,7 +10,7 @@ const suggestions = [
   'How can I start a project?',
 ];
 
-const welcomeMessage = 'Hi 👋 Welcome to GL SOLUTIONS. I can help you explore our services, understand how we work, and identify the right digital solution for your project.';
+const welcomeMessage = 'Hi 👋 Welcome to GALVIX SOLUTIONS. I can help you explore our services, understand how we work, and identify the right digital solution for your project.';
 
 const Chatbot = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -174,7 +174,7 @@ const Chatbot = () => {
                   <Bot size={18} />
                 </div>
                 <div>
-                  <p className="text-sm font-semibold tracking-[0.14em] text-white/90">GL SOLUTIONS</p>
+                  <p className="text-sm font-semibold tracking-[0.14em] text-white/90">GALVIX SOLUTIONS</p>
                   <p className="text-[11px] text-blue-200/80">AI Assistant</p>
                 </div>
               </div>

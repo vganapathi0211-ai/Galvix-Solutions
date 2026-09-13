@@ -1,6 +1,6 @@
 /**
- * GL Solutions Conversational AI Engine
- * Provides intelligent, context-aware responses regarding GL Solutions'
+ * GALVIX SOLUTIONS Conversational AI Engine
+ * Provides intelligent, context-aware responses regarding GALVIX SOLUTIONS'
  * services, technologies, process, pricing, and contact details.
  */
 
@@ -9,7 +9,7 @@ export function generateAssistantReply(messages) {
     return {
       success: true,
       status: 'SUCCESS',
-      reply: 'Hi! Welcome to GL SOLUTIONS. How can I help you today? Feel free to ask about our services, technology stack, or how we can help bring your project to life.',
+      reply: 'Hi! Welcome to GALVIX SOLUTIONS. How can I help you today? Feel free to ask about our services, technology stack, or how we can help bring your project to life.',
     };
   }
 
@@ -26,7 +26,7 @@ export function generateAssistantReply(messages) {
     return {
       success: true,
       status: 'SUCCESS',
-      reply: 'Hi there! I am the GL SOLUTIONS assistant. What kind of project or digital solution are you looking to explore?',
+      reply: 'Hi there! I am the GALVIX SOLUTIONS assistant. What kind of project or digital solution are you looking to explore?',
     };
   }
 
@@ -41,7 +41,7 @@ export function generateAssistantReply(messages) {
     return {
       success: true,
       status: 'SUCCESS',
-      reply: `You're very welcome! 😊 If you have any more questions or want to discuss an upcoming project, feel free to ask or reach out to our team at [hello@glsolutions.com](mailto:hello@glsolutions.com) or [+91 84899 68612](https://wa.me/918489968612).`,
+      reply: `You're very welcome! 😊 If you have any more questions or want to discuss an upcoming project, feel free to ask or reach out to our team at [galvixsolutions@gmail.com](mailto:galvixsolutions@gmail.com) or [+91 84899 68612](https://wa.me/918489968612).`,
     };
   }
 
@@ -60,7 +60,7 @@ export function generateAssistantReply(messages) {
     return {
       success: true,
       status: 'SUCCESS',
-      reply: `Hello! 👋 Welcome to GL SOLUTIONS. I'm here to help you explore our services, understand our tech stack, or discuss your upcoming digital project.
+      reply: `Hello! 👋 Welcome to GALVIX SOLUTIONS. I'm here to help you explore our services, understand our tech stack, or discuss your upcoming digital project.
 
 What are you looking to build or improve today?`,
     };
@@ -82,9 +82,9 @@ What are you looking to build or improve today?`,
     return {
       success: true,
       status: 'SUCCESS',
-      reply: `You can reach the GL SOLUTIONS team directly through:
+      reply: `You can reach the GALVIX SOLUTIONS team directly through:
 
-• **Email**: [hello@glsolutions.com](mailto:hello@glsolutions.com)
+• **Email**: [galvixsolutions@gmail.com](mailto:galvixsolutions@gmail.com)
 • **Phone & WhatsApp**: [+91 84899 68612](https://wa.me/918489968612)
 • **Location**: Remote-first delivery with global client support
 • **Direct Inquiry**: Submit the form in the Contact section on our homepage for a fast response from our team.
@@ -129,13 +129,13 @@ Are you building a new venture or looking to scale an existing product?`,
     return {
       success: true,
       status: 'SUCCESS',
-      reply: `Getting started with GL SOLUTIONS is simple and transparent:
+      reply: `Getting started with GALVIX SOLUTIONS is simple and transparent:
 
 1. **Initial Discovery**: Share your project goals, timeline, and requirements with us.
 2. **Strategy & Scope**: We'll review your objectives and suggest the most effective technical architecture and roadmap.
 3. **Proposal & Kickoff**: We agree on clear milestones, deliverables, and start building!
 
-You can begin right now by filling out the contact form below or reaching out directly on WhatsApp at [+91 84899 68612](https://wa.me/918489968612) or email at [hello@glsolutions.com](mailto:hello@glsolutions.com).`,
+You can begin right now by filling out the contact form below or reaching out directly on WhatsApp at [+91 84899 68612](https://wa.me/918489968612) or email at [galvixsolutions@gmail.com](mailto:galvixsolutions@gmail.com).`,
     };
   }
 
@@ -155,7 +155,7 @@ You can begin right now by filling out the contact form below or reaching out di
     return {
       success: true,
       status: 'SUCCESS',
-      reply: `GL SOLUTIONS works across a modern, battle-tested technology ecosystem:
+      reply: `GALVIX SOLUTIONS works across a modern, battle-tested technology ecosystem:
 
 • **Frontend**: React, Next.js, TypeScript, Tailwind CSS, Framer Motion
 • **Backend**: Node.js, Express, Java (Spring Boot), Python (FastAPI), REST & GraphQL APIs
@@ -252,7 +252,7 @@ Whether you need a high-converting marketing site or a complex web platform, we 
     return {
       success: true,
       status: 'SUCCESS',
-      reply: `GL SOLUTIONS helps businesses turn complexity into clarity through modern technology and digital products. Our core services include:
+      reply: `GALVIX SOLUTIONS helps businesses turn complexity into clarity through modern technology and digital products. Our core services include:
 
 • **Custom Software Development**: Scalable business systems, internal platforms, workflow automation, and custom API integrations.
 • **AI & Automation**: Custom AI chatbots, process automation, operational intelligence, and LLM-powered workflows.
@@ -285,7 +285,7 @@ Which of these areas aligns best with what you're looking to build?`,
 • **Custom Product Development**: Scoped according to features, integrations, and technical requirements.
 • **Consultation & Strategy**: Focused workshops to define requirements and architecture.
 
-Because every solution is custom-built, we provide an accurate estimate after a quick discovery conversation. Contact us at [hello@glsolutions.com](mailto:hello@glsolutions.com) or WhatsApp at [+91 84899 68612](https://wa.me/918489968612) with a brief overview of your project!`,
+Because every solution is custom-built, we provide an accurate estimate after a quick discovery conversation. Contact us at [galvixsolutions@gmail.com](mailto:galvixsolutions@gmail.com) or WhatsApp at [+91 84899 68612](https://wa.me/918489968612) with a brief overview of your project!`,
     };
   }
 
@@ -324,7 +324,7 @@ This ensures you stay in control throughout the entire lifecycle.`,
     return {
       success: true,
       status: 'SUCCESS',
-      reply: `Here are a few examples of solutions built by GL SOLUTIONS:
+      reply: `Here are a few examples of solutions built by GALVIX SOLUTIONS:
 
 • **Operations Dashboard**: Centralized operations and activity tracking into a modular real-time dashboard, improving team visibility.
 • **Client Experience Portal**: Designed a guided digital client onboarding journey that streamlined lead intake and boosted conversions.
@@ -334,18 +334,18 @@ Check out the Projects section on our homepage to see more details!`,
     };
   }
 
-  // 14. About GL Solutions / Who are you / Company
+  // 14. About GALVIX SOLUTIONS / Who are you / Company
   if (
     query.includes('about') ||
     query.includes('who are you') ||
-    query.includes('gl solutions') ||
+    query.includes('GALVIX SOLUTIONS') ||
     query.includes('tell me about yourself') ||
     query.includes('company')
   ) {
     return {
       success: true,
       status: 'SUCCESS',
-      reply: `GL SOLUTIONS is a technology partner that helps businesses turn complexity into clarity through modern technology, smarter workflows, and digital products built for growth.
+      reply: `GALVIX SOLUTIONS is a technology partner that helps businesses turn complexity into clarity through modern technology, smarter workflows, and digital products built for growth.
 
 We combine business-first strategy with engineering excellence—whether building custom software, designing web experiences, or automating operations with AI.
 
@@ -357,8 +357,8 @@ How can we assist your business today?`,
   return {
     success: true,
     status: 'SUCCESS',
-    reply: `Thank you for reaching out! At GL SOLUTIONS, we build custom software, web applications, AI automation tools, and scalable cloud solutions tailored to your business needs.
+    reply: `Thank you for reaching out! At GALVIX SOLUTIONS, we build custom software, web applications, AI automation tools, and scalable cloud solutions tailored to your business needs.
 
-Could you tell me a little more about what you're working on, or would you like to speak directly with our team? You can reach us directly at [hello@glsolutions.com](mailto:hello@glsolutions.com) or WhatsApp at [+91 84899 68612](https://wa.me/918489968612).`,
+Could you tell me a little more about what you're working on, or would you like to speak directly with our team? You can reach us directly at [galvixsolutions@gmail.com](mailto:galvixsolutions@gmail.com) or WhatsApp at [+91 84899 68612](https://wa.me/918489968612).`,
   };
 }

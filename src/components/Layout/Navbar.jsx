@@ -33,10 +33,12 @@ const Navbar = () => {
             duration={300}
             className="text-2xl font-bold cursor-pointer text-white flex items-center gap-3 transition-transform hover:scale-[1.01]"
           >
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl border border-blue-400/30 bg-gradient-to-br from-blue-500/20 to-cyan-500/10 text-sm font-black tracking-widest text-blue-300 shadow-[0_0_28px_rgba(59,130,246,0.30)]">
-              GL
-            </div>
-            <span className="text-[0.75rem] sm:text-base font-semibold tracking-[0.22em] text-white">GL SOLUTIONS</span>
+            <img
+              src="/logo.png"
+              alt="GALVIX Solutions Logo"
+              className="h-10 w-10 rounded-xl object-contain shadow-[0_0_28px_rgba(59,130,246,0.30)] bg-white/5 border border-blue-400/30 p-0.5"
+            />
+            <span className="text-[0.75rem] sm:text-base font-semibold tracking-[0.22em] text-white">GALVIX SOLUTIONS</span>
           </Link>
 
           <div className="hidden md:flex items-center space-x-8">
