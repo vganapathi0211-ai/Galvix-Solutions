@@ -1,6 +1,6 @@
 const GOOGLE_SHEET_WEBHOOK_URL =
   process.env.GOOGLE_SHEET_WEBHOOK_URL ||
-  'https://script.google.com/macros/s/AKfycbwJ3CDdhsnSZjlxeheFbNnu_N_0kvSViJnKYNiQ5I_4F_G-aKZVBaw9gC_IxMuGfD8lpw/exec';
+  'https://script.google.com/macros/s/AKfycbzqsjHKi3y036krqUNEXlgDrgKp397FguVYy95Og18ZzZMIkMA2pOYxYWQpFHK2yR3H/exec';
 
 const readBody = async (req) => {
   if (req.method === 'GET' || req.method === 'HEAD') {

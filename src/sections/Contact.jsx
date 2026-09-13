@@ -38,7 +38,7 @@ const Contact = () => {
     },
   });
 
-  const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwJ3CDdhsnSZjlxeheFbNnu_N_0kvSViJnKYNiQ5I_4F_G-aKZVBaw9gC_IxMuGfD8lpw/exec';
+  const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzqsjHKi3y036krqUNEXlgDrgKp397FguVYy95Og18ZzZMIkMA2pOYxYWQpFHK2yR3H/exec';
 
   const onSubmit = async (values) => {
     setIsSubmitting(true);
