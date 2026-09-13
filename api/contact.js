@@ -1,16 +1,14 @@
-const getBackendBaseUrl = () => {
-  const candidates = [
-    process.env.JAVA_BACKEND_URL,
-    process.env.BACKEND_API_URL,
-    process.env.VITE_API_BASE_URL,
-  ];
-
-  return candidates.find(Boolean)?.replace(/\/$/, '');
-};
+const GOOGLE_SHEET_WEBHOOK_URL =
+  process.env.GOOGLE_SHEET_WEBHOOK_URL ||
+  'https://script.google.com/macros/s/AKfycbwJ3CDdhsnSZjlxeheFbNnu_N_0kvSViJnKYNiQ5I_4F_G-aKZVBaw9gC_IxMuGfD8lpw/exec';
 
 const readBody = async (req) => {
   if (req.method === 'GET' || req.method === 'HEAD') {
     return undefined;
+  }
+
+  if (req.body && typeof req.body === 'object') {
+    return req.body;
   }
 
   const chunks = [];
@@ -31,30 +29,36 @@ const readBody = async (req) => {
 };
 
 export default async function handler(req, res) {
-  const backendBaseUrl = getBackendBaseUrl();
-
-  if (!backendBaseUrl) {
-    res.status(503).json({
-      success: false,
-      message: 'The backend service is not configured for this deployment.',
-    });
+  if (req.method !== 'POST') {
+    res.setHeader('Allow', ['POST']);
+    res.status(405).json({ success: false, message: 'Method Not Allowed' });
     return;
   }
 
-  const payload = await readBody(req);
-  const response = await fetch(`${backendBaseUrl}/api/contact`, {
-    method: req.method,
-    headers: {
-      'Content-Type': 'application/json',
-      Accept: 'application/json',
-      ...(req.headers && req.headers['x-forwarded-for'] ? { 'X-Forwarded-For': req.headers['x-forwarded-for'] } : {}),
-    },
-    body: payload && typeof payload !== 'string' ? JSON.stringify(payload) : payload || undefined,
-  });
+  try {
+    const payload = await readBody(req);
+    if (!payload) {
+      res.status(400).json({ success: false, message: 'Payload is empty' });
+      return;
+    }
 
-  const text = await response.text();
-  const contentType = response.headers.get('content-type') || 'application/json';
+    const response = await fetch(GOOGLE_SHEET_WEBHOOK_URL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: typeof payload === 'string' ? payload : JSON.stringify(payload),
+    });
 
-  res.setHeader('Content-Type', contentType);
-  res.status(response.status).send(text || JSON.stringify({ success: false, message: 'No response returned from backend.' }));
+    res.status(200).json({
+      success: true,
+      message: 'Inquiry received and saved to spreadsheet.',
+    });
+  } catch (error) {
+    console.error('Failed to submit inquiry:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Failed to record your inquiry. Please try again or email us directly.',
+    });
+  }
 }

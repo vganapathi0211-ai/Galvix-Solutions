@@ -38,33 +38,57 @@ const Contact = () => {
     },
   });
 
+  const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwJ3CDdhsnSZjlxeheFbNnu_N_0kvSViJnKYNiQ5I_4F_G-aKZVBaw9gC_IxMuGfD8lpw/exec';
+
   const onSubmit = async (values) => {
     setIsSubmitting(true);
     setSubmitState('idle');
 
+    const leadPayload = {
+      name: values.name,
+      email: values.email,
+      phone: values.phone || 'Not provided',
+      company: values.company,
+      service: values.service,
+      message: values.message,
+    };
+
     try {
       const apiBaseUrl = import.meta.env.VITE_API_BASE_URL || '';
-      const response = await fetch(`${apiBaseUrl}/api/contact`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Accept: 'application/json',
-        },
-        body: JSON.stringify({
-          name: values.name,
-          email: values.email,
-          phone: values.phone || 'Not provided',
-          company: values.company,
-          service: values.service,
-          message: values.message,
-        }),
-      });
+      let success = false;
 
-      const data = await response.json().catch(() => ({}));
+      // 1. Try Vercel Serverless Function
+      try {
+        const response = await fetch(`${apiBaseUrl}/api/contact`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Accept: 'application/json',
+          },
+          body: JSON.stringify(leadPayload),
+        });
 
-      if (!response.ok || data.success === false) {
-        setSubmitState('error');
-        return;
+        if (response.ok) {
+          const data = await response.json().catch(() => ({}));
+          if (data.success !== false) {
+            success = true;
+          }
+        }
+      } catch (e) {
+        // Fall through to direct script submit
+      }
+
+      // 2. If API didn't succeed, submit directly to Google Sheet Web App
+      if (!success) {
+        await fetch(GOOGLE_SCRIPT_URL, {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(leadPayload),
+        });
+        success = true;
       }
 
       setSubmitState('success');
