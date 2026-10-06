@@ -38,8 +38,6 @@ const Contact = () => {
     },
   });
 
-  const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzqsjHKi3y036krqUNEXlgDrgKp397FguVYy95Og18ZzZMIkMA2pOYxYWQpFHK2yR3H/exec';
-
   const onSubmit = async (values) => {
     setIsSubmitting(true);
     setSubmitState('idle');
@@ -54,51 +52,35 @@ const Contact = () => {
     };
 
     try {
-      const apiBaseUrl = import.meta.env.VITE_API_BASE_URL || '';
-      let success = false;
+      // Submit via Vercel serverless function (keeps Google Script URL server-side)
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+        body: JSON.stringify(leadPayload),
+      });
 
-      // 1. Try Vercel Serverless Function
-      try {
-        const response = await fetch(`${apiBaseUrl}/api/contact`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            Accept: 'application/json',
-          },
-          body: JSON.stringify(leadPayload),
-        });
-
-        if (response.ok) {
-          const data = await response.json().catch(() => ({}));
-          if (data.success !== false) {
-            success = true;
-          }
+      if (response.ok) {
+        const data = await response.json().catch(() => ({}));
+        if (data.success !== false) {
+          setSubmitState('success');
+          reset();
+        } else {
+          setSubmitState('error');
         }
-      } catch (e) {
-        // Fall through to direct script submit
+      } else {
+        setSubmitState('error');
       }
-
-      // 2. If API didn't succeed, submit directly to Google Sheet Web App
-      if (!success) {
-        await fetch(GOOGLE_SCRIPT_URL, {
-          method: 'POST',
-          mode: 'no-cors',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(leadPayload),
-        });
-        success = true;
-      }
-
-      setSubmitState('success');
-      reset();
     } catch (error) {
+      console.error('Form submission error:', error);
       setSubmitState('error');
     } finally {
       setIsSubmitting(false);
     }
   };
+
 
   return (
     <section id="contact" className="py-24 relative">

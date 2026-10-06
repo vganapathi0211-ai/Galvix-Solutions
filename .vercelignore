@@ -1,0 +1,19 @@
+# Exclude non-essential files from Vercel deployment
+.venv/
+.git/
+.github/
+.21st/
+GL web/
+gl website/
+gp square web/
+node_modules/
+*.md
+!README.md
+docker-compose.yml
+firebase.json
+netlify.toml
+fix-lint.cjs
+playwright-home.png
+.env
+.env.*
+!.env.example

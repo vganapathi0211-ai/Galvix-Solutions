@@ -1,6 +1,6 @@
 const GOOGLE_SHEET_WEBHOOK_URL =
   process.env.GOOGLE_SHEET_WEBHOOK_URL ||
-  'https://script.google.com/macros/s/AKfycbzqsjHKi3y036krqUNEXlgDrgKp397FguVYy95Og18ZzZMIkMA2pOYxYWQpFHK2yR3H/exec';
+  '';
 
 const readBody = async (req) => {
   if (req.method === 'GET' || req.method === 'HEAD') {
@@ -39,6 +39,11 @@ export default async function handler(req, res) {
     const payload = await readBody(req);
     if (!payload) {
       res.status(400).json({ success: false, message: 'Payload is empty' });
+      return;
+    }
+
+    if (!GOOGLE_SHEET_WEBHOOK_URL) {
+      res.status(503).json({ success: false, message: 'Sheet webhook not configured' });
       return;
     }
 
